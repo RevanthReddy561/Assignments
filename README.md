@@ -1,34 +1,27 @@
-# Assignments
+Description:
 
-Hi Raja,
+Deployment involves adding parameter files, executing one PowerShell script, and updating a deployment file. No functional changes to the system or application behavior.
+Risk Assessment:
 
-Please find the details below:
+Risk Level: Minimal.
+Changes are configuration-related and non-intrusive.
+Tested successfully in the non-production environment.
+Rollback Plan:
 
-List of activities performed:
+Simply remove the updated files and revert to the previous versions if needed.
+Impact:
 
-Added parameter files (QC, SIT, PPD) in EMEA.
-Created and executed PowerShell scripts for updating the data disk of servers.
-Deployed the parameter file used for updating server configurations.
-Is there any outage for the application?
+Impact Level: Low.
+No expected downtime or disruption to users.
+Testing Evidence:
 
-None.
-Does the application team need to perform any steps like stopping/resuming services?
+Successfully tested in non-production, and documentation will be attached to the ticket.
+Planned Schedule:
 
-Not necessary.
-What level of testing is needed by the application team or cloud engineering team?
+Deployment scheduled for Friday from 5:00 PM to 7:00 PM.
+Stakeholder Notifications:
 
-Testing was completed in the non-production environment.
-Are there any other teams involved?
+A courtesy notification to stakeholders before and after deployment.
+Monitoring Plan:
 
-No other teams are involved.
-What are the planned start and end times?
-
-Planned completion by Friday.
-Changes in non-production environments:
-
-All changes have been tested successfully in the non-production environment.
-Documentation for successful completion has been prepared and will be attached to the production change request.
-Let me know if further information is needed.
-
-Best regards,
-Revanth
+Basic system health checks and file validation post-deployment.
