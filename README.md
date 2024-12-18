@@ -1,27 +1,20 @@
-Description:
+Hi [Manager's Name],
 
-Deployment involves adding parameter files, executing one PowerShell script, and updating a deployment file. No functional changes to the system or application behavior.
-Risk Assessment:
+Please find my work updates for today:
 
-Risk Level: Minimal.
-Changes are configuration-related and non-intrusive.
-Tested successfully in the non-production environment.
-Rollback Plan:
+1. Tasks Completed:
 
-Simply remove the updated files and revert to the previous versions if needed.
-Impact:
+Received response from Azure Support regarding [specific concern] and followed the provided instructions.
+Developed and executed a shell script to install an extension on a server, which was successfully installed.
+Shared updates and additional required details with Azure Support.
+2. In Progress:
 
-Impact Level: Low.
-No expected downtime or disruption to users.
-Testing Evidence:
+Raised a PR for Kofax, addressed the comments received, and the PR is now pending approval.
+Started implementing the post-migration tasks for ReWeb.
+3. Roadblocks/Concerns:
 
-Successfully tested in non-production, and documentation will be attached to the ticket.
-Planned Schedule:
+[Mention any blockers if applicable, or say "None."]
+Let me know if you need further information or updates on these tasks.
 
-Deployment scheduled for Friday from 5:00 PM to 7:00 PM.
-Stakeholder Notifications:
-
-A courtesy notification to stakeholders before and after deployment.
-Monitoring Plan:
-
-Basic system health checks and file validation post-deployment.
+Thanks & Regards,
+Revanth
