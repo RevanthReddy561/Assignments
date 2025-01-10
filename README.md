@@ -1,70 +1,43 @@
-Steps for Upgrading a Server (SKU and Data Disk)
-This section provides step-by-step instructions for performing server upgrades, including VM SKU changes and data disk updates, using parameter files and running pipelines for deployment.
+Steps to Upgrade a Server (SKU and Data Disk)
+When performing upgrades to servers such as changing the VM SKU or updating the data disk size, we follow a structured process to ensure consistency and minimize risks. Here's the high-level workflow:
 
-1. Steps for Upgrading VM SKU Using Parameter Files
-Step 1: Update the Parameter File
+1. Updating VM SKU
+Modify Parameter Files:
 
-Navigate to the parameter file associated with the environment (e.g., dev, QC, prod).
-Modify the vmSize parameter to reflect the desired SKU:
-json
-Copy code
-"parameters": {
-    "vmSize": {
-        "value": "Standard_D4s_v3"
-    }
-}
-Save the changes to the parameter file.
-Step 2: Raise a Pull Request (PR)
+Instead of directly editing the ARM template, we use parameter files. These files define the configurations for the VMs (e.g., size, region, and other specifications).
+For an SKU update, we change the vmSize value in the relevant parameter file corresponding to the environment (e.g., dev, QC, prod).
+Push and Review Changes:
 
-Push the updated parameter file to the repository.
-Raise a PR for review and approval.
-Step 3: Run the Deployment Pipeline
+The updated parameter file is pushed to the repository, and a Pull Request (PR) is raised. This allows team members to review and approve the changes.
+Deploy via Pipeline:
 
-Once the PR is approved and merged, trigger the deployment pipeline for the updated environment.
-Monitor the pipeline for successful execution.
-Step 4: Verify the Update
+Once the PR is approved and merged, we run the deployment pipeline. The pipeline uses the updated parameter file to apply the changes.
+Verify the Upgrade:
 
-After the pipeline deployment completes, verify the VM SKU update in Azure:
-bash
-Copy code
-az vm show --resource-group <resource-group-name> --name <vm-name> --query "hardwareProfile.vmSize"
-2. Steps for Upgrading Data Disk Using Parameter Files and PowerShell Scripts
-Step 1: Update the Parameter File
+After the deployment completes, the VM SKU is verified through the Azure portal or other tools to confirm the update.
+2. Updating Data Disk Size
+Modify Parameter Files:
 
-Open the parameter file for the environment.
-Add or update the dataDiskSize value:
-json
-Copy code
-"parameters": {
-    "dataDiskSize": {
-        "value": 1024  # Size in GB
-    }
-}
-Save the file and push it to the repository.
-Step 2: Raise a Pull Request (PR)
+For data disk updates, the dataDiskSize parameter is updated in the parameter file. This ensures that changes are applied in a controlled manner and not directly in the ARM template.
+Raise PR and Approval:
 
-Push the updated parameter file to the repository and create a PR.
-Get approval and merge the changes.
-Step 3: Run the Deployment Pipeline
+Similar to SKU updates, the changes are reviewed through a PR process and approved by the appropriate team members.
+Deploy via Pipeline:
 
-Trigger the deployment pipeline to apply the data disk update using the modified parameter file.
-Monitor the pipeline logs for success.
-Step 4: Handle Complex Updates Using PowerShell (If Needed)
+The pipeline is triggered to deploy the updated configurations to the server.
+Advanced Updates with PowerShell (Optional):
 
-If specific updates (e.g., SKU changes) are not supported through ARM templates or require custom steps, use PowerShell:
-powershell
-Copy code
-$ResourceGroup = "<resource-group-name>"
-$VMName = "<vm-name>"
-$DiskName = "<disk-name>"
-$NewSizeGB = 1024
+For complex updates (e.g., when certain changes are not fully supported by ARM templates), PowerShell scripts can be used to handle such scenarios. This is done only when necessary.
+Key Workflow and Best Practices
+Separation of Configurations:
 
-$VM = Get-AzVM -ResourceGroupName $ResourceGroup -Name $VMName
-$Disk = $VM.StorageProfile.DataDisks | Where-Object { $_.Name -eq $DiskName }
-$Disk.DiskSizeGB = $NewSizeGB
-Update-AzVM -ResourceGroupName $ResourceGroup -VM $VM
-3. Deployment Workflow for Upgrades
-Modify Parameter File: Update the respective parameter file for SKU or data disk changes.
-Raise and Approve PR: Ensure changes are reviewed and approved.
-Run Pipeline: Deploy updates via the approved pipeline.
-Verify: Confirm updates in Azure Portal or using CLI commands.
+All updates are made in parameter files specific to each environment. This approach ensures that configurations remain consistent and easy to manage.
+Approval Process:
+
+All changes are reviewed through a formal PR process to avoid errors and maintain quality control.
+Automated Deployment:
+
+Pipelines are used to automate the deployment of updates, ensuring reliability and reducing manual intervention.
+Verification:
+
+Each change is verified in the Azure portal or using CLI tools to ensure the update has been applied successfully.
