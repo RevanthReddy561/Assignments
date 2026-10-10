@@ -1,0 +1,10 @@
+
+podTemplate(inheritFrom: 'caas') {
+    node(POD_LABEL) {
+        stage('Artifactory TLS Check') {
+            container('helm') {
+                sh '/usr/bin/curl -vI --connect-timeout 10 --max-time 30 https://artifactory.fis.dev'
+            }
+        }
+    }
+}
