@@ -1,0 +1,11 @@
+
+podTemplate(inheritFrom: 'caas') {
+    node(POD_LABEL) {
+        stage('Check Certificate Tools') {
+            container('helm') {
+                sh 'openssl version'
+                sh 'ls -l /etc/pki/tls/certs/ca-bundle.crt'
+            }
+        }
+    }
+}
