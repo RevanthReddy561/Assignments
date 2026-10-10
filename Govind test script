@@ -1,0 +1,22 @@
+
+podTemplate(inheritFrom: 'caas') {
+    node(POD_LABEL) {
+        stage('Check Curl Configuration') {
+            container('helm') {
+                sh '''
+                    echo "Curl location:"
+                    command -v curl
+
+                    echo "Curl version and protocols:"
+                    curl -V
+
+                    echo "HTTPS proxy configuration:"
+                    env | grep -i proxy | sed -E 's#(https?://)[^/@ ]+@#\\1***@#g' || true
+
+                    echo "Container OS:"
+                    cat /etc/os-release
+                '''
+            }
+        }
+    }
+}
