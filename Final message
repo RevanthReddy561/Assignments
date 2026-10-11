@@ -1,0 +1,5 @@
+Hi, I’ve been troubleshooting the Zelle-UI Jenkins pipeline failure at the Publish Helm Chart stage. The Helm packaging is successful, but the artifact upload to Artifactory is failing.
+
+I created a separate diagnostic pipeline and confirmed it's an SSL certificate trust issue ("curl exit code 60 – self-signed certificate in certificate chain") in the Jenkins Helm container.
+
+Looks like we need to update the trusted CA certificate in the container or the inherited CAAS agent configuration. I'm not sure which team owns this. Do you know who we should reach out to, or if there's an existing process to get this fixed?
