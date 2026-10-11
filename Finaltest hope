@@ -1,0 +1,29 @@
+
+podTemplate(inheritFrom: 'caas') {
+    node(POD_LABEL) {
+        stage('Artifactory SSL Investigation') {
+            container('helm') {
+                sh '''
+set +e
+
+echo "===== 1. CURL VERSION ====="
+curl -V
+
+echo "===== 2. CA TRUST STORE ====="
+ls -l /etc/pki/tls/certs/ca-bundle.crt
+ls -l /etc/pki/ca-trust/source/anchors/
+
+echo "===== 3. CERTIFICATE DETAILS ====="
+curl -vI --connect-timeout 10 --max-time 30 https://artifactory.fis.dev
+echo "CURL_EXIT_CODE=$?"
+
+echo "===== 4. CERTIFICATE TOOLS ====="
+command -v openssl || true
+command -v update-ca-trust || true
+
+echo "===== DIAGNOSTIC COMPLETE ====="
+'''
+            }
+        }
+    }
+}
