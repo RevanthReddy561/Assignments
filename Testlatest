@@ -1,0 +1,16 @@
+
+podTemplate(inheritFrom: 'caas') {
+    node(POD_LABEL) {
+        stage('Check CA Trust Store') {
+            container('helm') {
+                sh '''
+echo "Checking CA bundle..."
+ls -l /etc/pki/tls/certs/ca-bundle.crt
+
+echo "Checking CA trust directory..."
+ls -l /etc/pki/ca-trust/source/anchors/
+'''
+            }
+        }
+    }
+}
